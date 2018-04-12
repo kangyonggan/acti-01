@@ -1,6 +1,6 @@
 package com.kangyonggan.acti;
 
-import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class Demo07 extends AbstractServiceTest {
 
     @Autowired
-    private ProcessEngine processEngine;
+    private TaskService taskService;
 
     /**
      * manager查询我的待办任务，并执行任务
@@ -26,15 +26,15 @@ public class Demo07 extends AbstractServiceTest {
     public void complete() throws Exception {
         // 查询任务
         String assignee = "manager";
-        TaskQuery query = processEngine.getTaskService().createTaskQuery();
+        TaskQuery query = taskService.createTaskQuery();
         query.taskAssignee(assignee);
         List<Task> tasks = query.list();
 
         // 执行任务
-        Map<String, Object> variables = new HashMap<>(2);
-        variables.put("status", "complete");
-        variables.put("replyMsg", "准了");
-        processEngine.getTaskService().complete(tasks.get(0).getId(), variables);
+        Map<String, Object> transientVariables = new HashMap<>(2);
+        transientVariables.put("status", "reject");
+        transientVariables.put("replyMsg", "不可以");
+        taskService.complete(tasks.get(0).getId(), new HashMap<>(), transientVariables);
     }
 
 }

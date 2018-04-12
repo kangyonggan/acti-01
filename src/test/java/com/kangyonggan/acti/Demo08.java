@@ -1,7 +1,8 @@
 package com.kangyonggan.acti;
 
 import org.activiti.engine.ActivitiException;
-import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +16,10 @@ import java.util.Map;
 public class Demo08 extends AbstractServiceTest {
 
     @Autowired
-    private ProcessEngine processEngine;
+    private RepositoryService repositoryService;
+
+    @Autowired
+    private RuntimeService runtimeService;
 
     private static final String DEF_KEY = "LeaveProcess";
 
@@ -24,7 +28,7 @@ public class Demo08 extends AbstractServiceTest {
      */
     @Test
     public void suspend() throws Exception {
-        processEngine.getRepositoryService().suspendProcessDefinitionByKey(DEF_KEY);
+        repositoryService.suspendProcessDefinitionByKey(DEF_KEY);
     }
 
     /**
@@ -32,7 +36,7 @@ public class Demo08 extends AbstractServiceTest {
      */
     @Test
     public void active() throws Exception {
-        processEngine.getRepositoryService().activateProcessDefinitionByKey(DEF_KEY);
+        repositoryService.activateProcessDefinitionByKey(DEF_KEY);
     }
 
     /**
@@ -47,7 +51,7 @@ public class Demo08 extends AbstractServiceTest {
             Map<String, Object> variables = new HashMap<>(1);
             // 谁请假?
             variables.put("user", "lisi");
-            processEngine.getRuntimeService().startProcessInstanceByKey(DEF_KEY, businessKey, variables);
+            runtimeService.startProcessInstanceByKey(DEF_KEY, businessKey, variables);
         } catch (ActivitiException e) {
             e.printStackTrace();
         }

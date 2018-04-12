@@ -1,6 +1,6 @@
 package com.kangyonggan.acti;
 
-import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 public class Demo10 extends AbstractServiceTest {
 
     @Autowired
-    private ProcessEngine processEngine;
+    private TaskService taskService;
 
     /**
      * 需求：部门经理想查询张三和李四的请假申请。
@@ -26,8 +26,7 @@ public class Demo10 extends AbstractServiceTest {
                 + "ON a.PROC_INST_ID_ = b.PROC_INST_ID_ WHERE "
                 + "b.NAME_ = 'user' AND b.TEXT_ IN ('zhangsan', 'lisi')";
 
-        List<Task> tasks = processEngine.getTaskService()
-                .createNativeTaskQuery()
+        List<Task> tasks = taskService.createNativeTaskQuery()
                 .sql(sql).list();
 
         for (Task task : tasks) {
