@@ -22,7 +22,7 @@ public class Demo04 extends AbstractServiceTest {
      */
     @Test
     public void deploy() throws Exception {
-        String zipPath = "D:\\code\\acti-01\\src\\main\\resources\\leave.zip";
+        String zipPath = "/Users/kyg/code/kyg/acti-01/src/main/resources/leave.zip";
         Deployment deployment = processEngine.getRepositoryService().createDeployment()
                 .addZipInputStream(new ZipInputStream(new FileInputStream(zipPath))).deploy();
 

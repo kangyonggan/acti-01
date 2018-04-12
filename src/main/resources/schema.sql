@@ -1,0 +1,7 @@
+DROP DATABASE IF EXISTS acti;
+
+CREATE DATABASE acti
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci;
+
+USE acti;
